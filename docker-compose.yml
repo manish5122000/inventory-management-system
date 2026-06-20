@@ -4,7 +4,7 @@ services:
 
   postgres:
     image: postgres:16-alpine
-    container_name: inventory_postgres
+    container_name: inventory_db2
 
     restart: unless-stopped
 
@@ -25,12 +25,13 @@ services:
       timeout: 5s
       retries: 5
 
+
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
 
-    container_name: inventory_backend
+    container_name: IMS_backend
 
     restart: unless-stopped
 
@@ -38,19 +39,20 @@ services:
       - "8000:8000"
 
     environment:
-      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${IP}:5432/${POSTGRES_DB}
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
       FRONTEND_URL: ${FRONTEND_URL}
 
     depends_on:
       postgres:
         condition: service_healthy
 
+
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
 
-    container_name: inventory_frontend
+    container_name: IMS_frontend
 
     restart: unless-stopped
 
@@ -62,6 +64,7 @@ services:
 
     depends_on:
       - backend
+
 
 volumes:
   postgres_data:

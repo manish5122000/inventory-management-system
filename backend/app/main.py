@@ -14,37 +14,44 @@ from app.orders.router import router as order_router
 from app.dashboard.router import router as dashboard_router
 
 
-limiter = Limiter(key_func=get_remote_address)
+limiter = Limiter(
+    key_func=get_remote_address
+)
+
 
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION
 )
 
+
 app.state.limiter = limiter
+
 app.add_exception_handler(
     RateLimitExceeded,
     _rate_limit_exceeded_handler
 )
 
-frontend_url = getattr(
-       settings.FRONTEND_URL
-)
+
+frontend_url = settings.FRONTEND_URL
+
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-           settings.FRONTEND_URL
+        frontend_url
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+
 app.include_router(product_router)
 app.include_router(customer_router)
 app.include_router(order_router)
 app.include_router(dashboard_router)
+
 
 app.add_exception_handler(
     Exception,

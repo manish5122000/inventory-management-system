@@ -65,7 +65,7 @@ export default function OrderTable({ orders, onViewDetails }) {
               </td>
               <td className="px-6 py-4 text-right">
                 <div className="flex items-center justify-end gap-2">
-                  <DollarSign className="w-4 h-4 text-green-500" />
+                  {/* <DollarSign className="w-4 h-4 text-green-500" /> */}
                   <span className="font-semibold text-slate-900">₹{order.total_amount?.toFixed(2) || "0.00"}</span>
                 </div>
               </td>
