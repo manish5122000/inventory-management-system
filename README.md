@@ -1,6 +1,6 @@
 # Inventory & Order Management System
 
-A full-stack Inventory & Order Management System built with React, FastAPI, PostgreSQL, and Docker.
+A Inventory Management System built with React, FastAPI, PostgreSQL, and Docker.
 
 ## Tech Stack
 
